@@ -1,70 +1,622 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>TechNexus - Inteligência e Pesquisa de Inovação</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script><script src="https://unpkg.com/lucide@latest"></script>
-<script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif'],mono:['JetBrains Mono','monospace']}}}}</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif'],mono:['JetBrains Mono','monospace']}}}}
+</script>
 <style>
-.markdown-body h1{font-size:1.875rem;font-weight:700;color:#fff;margin:1.5rem 0 1rem;border-bottom:1px solid #27272a;padding-bottom:.5rem}.markdown-body h2{font-size:1.5rem;font-weight:600;color:#f4f4f5;margin:1.5rem 0 .75rem}.markdown-body h3{font-size:1.25rem;font-weight:600;color:#e4e4e7;margin:1.25rem 0 .5rem}.markdown-body p{font-size:.95rem;line-height:1.625;color:#d4d4d8;margin-bottom:1rem}.markdown-body ul{list-style:disc;padding-left:1.5rem;margin-bottom:1rem;color:#d4d4d8}.markdown-body li{margin-bottom:.25rem}.markdown-body img{border-radius:1rem;margin:1.5rem 0;border:1px solid #27272a;max-width:100%;height:auto}.result-link{display:block;padding:1rem;border:1px solid #27272a;border-radius:1rem;background:#18181b;margin-bottom:.75rem;transition:.2s}.result-link:hover{border-color:#06b6d4;background:#202024}.result-link h3{color:#fff;font-weight:600;margin:0 0 .35rem;font-size:1rem}.result-link p{color:#a1a1aa;font-size:.8rem;margin:0;line-height:1.5}.result-link a{color:#22d3ee;font-size:.72rem;word-break:break-all}.scrollbar::-webkit-scrollbar{width:6px}.scrollbar::-webkit-scrollbar-thumb{background:#27272a;border-radius:99px}
+.markdown-body h1{font-size:1.875rem;font-weight:700;color:#fff;margin:1.5rem 0 1rem;border-bottom:1px solid #27272a;padding-bottom:.5rem}
+.markdown-body h2{font-size:1.5rem;font-weight:600;color:#f4f4f5;margin:1.5rem 0 .75rem}
+.markdown-body h3{font-size:1.25rem;font-weight:600;color:#e4e4e7;margin:1.25rem 0 .5rem}
+.markdown-body p{font-size:.95rem;line-height:1.625;color:#d4d4d8;margin-bottom:1rem}
+.markdown-body ul{list-style:disc;padding-left:1.5rem;margin-bottom:1rem;color:#d4d4d8}
+.markdown-body li{margin-bottom:.25rem}
+.result-card{display:block;padding:1.1rem;border:1px solid #27272a;border-radius:1rem;background:#18181b;margin-bottom:.8rem;transition:.2s}
+.result-card:hover{border-color:#06b6d4;background:#202024;transform:translateY(-1px)}
+.result-card h3{color:#fff;font-weight:600;margin:0 0 .45rem;font-size:1rem}
+.result-card p{color:#a1a1aa;font-size:.82rem;margin:0 0 .7rem;line-height:1.55}
+.result-card .meta{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;color:#71717a;font-size:.68rem;font-family:'JetBrains Mono',monospace}
+.result-card .tag{padding:.2rem .45rem;border-radius:.35rem;background:#27272a;color:#a1a1aa}
+.search-summary{border:1px solid #27272a;background:#18181b;border-radius:1rem;padding:1rem;margin-bottom:1rem}
+.search-summary strong{color:#fff}
+.external-search{display:inline-flex;align-items:center;gap:.4rem;color:#22d3ee;font-size:.78rem;font-weight:600}
+.scrollbar::-webkit-scrollbar{width:6px}.scrollbar::-webkit-scrollbar-thumb{background:#27272a;border-radius:99px}
+@media (max-width:767px){
+html,body{min-height:100%;overflow-x:hidden;overflow-y:auto!important}
+body{display:block!important}
+main{height:auto!important;min-height:100dvh;overflow:visible!important}
+header{position:sticky;top:0}
+}
 </style>
 
 <style>
-/* Mobile scrolling fix: keep desktop workspace behavior, but let the page itself scroll on phones. */
-@media (max-width: 767px) {
-  html, body {
-    min-height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto !important;
-  }
-  body { display: block !important; }
-  main {
-    height: auto !important;
-    min-height: 100dvh;
-    overflow: visible !important;
-  }
-  header { position: sticky; top: 0; }
-}
+.live-result-card{background:rgba(24,24,27,.55);border:1px solid #27272a;border-radius:1rem;padding:1.1rem;margin-top:.75rem;transition:.2s}
+.live-result-card:hover{border-color:rgba(34,211,238,.35);background:rgba(24,24,27,.8)}
+.live-result-card h3{font-size:1rem;font-weight:700;color:#fff;margin:0 0 .45rem}
+.live-result-card p{font-size:.82rem;line-height:1.6;color:#a1a1aa;margin:0}
+.live-result-card .source-row{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-top:.7rem}
+.source-badge{font-size:.65rem;font-family:'JetBrains Mono',monospace;color:#67e8f9;background:rgba(34,211,238,.08);padding:.25rem .5rem;border-radius:.45rem}
+.source-link{font-size:.72rem;color:#a5b4fc;text-decoration:none}
+.source-link:hover{color:#fff;text-decoration:underline}
+.search-status{font-size:.72rem;color:#71717a;font-family:'JetBrains Mono',monospace}
+.answer-box{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(168,85,247,.06));border:1px solid rgba(63,63,70,.8);border-radius:1rem;padding:1rem}
+.answer-box strong{color:#fff}
 </style>
+
 </head>
+
 <body class="min-h-screen bg-zinc-950 text-zinc-50 flex flex-col md:flex-row overflow-hidden font-sans antialiased">
+
 <aside class="hidden md:flex flex-col w-64 bg-zinc-950 border-r border-zinc-900 h-screen p-6 shrink-0 justify-between">
-<div class="space-y-8"><div class="flex items-center gap-3 cursor-pointer" onclick="showSection('home')"><div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center shadow-[0_0_20px_rgba(34,211,238,.3)]"><i data-lucide="cpu" class="w-5 h-5 text-white"></i></div><span class="font-bold text-xl tracking-tight text-white">TechNexus</span></div>
-<nav class="space-y-1"><button onclick="showSection('home')" id="nav-home" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium bg-zinc-900 text-white border border-zinc-800"><i data-lucide="home" class="w-4 h-4 text-cyan-400"></i>Início & Notícias</button><button onclick="showSection('search')" id="nav-search" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:bg-zinc-900/50 hover:text-zinc-200"><i data-lucide="compass" class="w-4 h-4"></i>Descobrir (AI)</button><button onclick="showSection('profile')" id="nav-profile" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:bg-zinc-900/50 hover:text-zinc-200"><i data-lucide="user" class="w-4 h-4"></i>Meu Perfil</button></nav></div>
-<div class="space-y-4"><div class="border-t border-zinc-900 pt-4"><button onclick="showSection('login')" id="nav-login" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-zinc-500 hover:text-zinc-300"><i data-lucide="log-in" class="w-3.5 h-3.5"></i>Entrar / Registrar</button><button onclick="showSection('privacy')" id="nav-privacy" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-zinc-500 hover:text-zinc-300"><i data-lucide="lock" class="w-3.5 h-3.5"></i>Privacidade</button></div><div class="p-3 bg-zinc-900/40 border border-zinc-900 rounded-xl flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center"><i data-lucide="user" class="w-4 h-4 text-zinc-400"></i></div><div><span class="block text-xs font-medium text-zinc-200">Convidado</span><span class="text-[9px] text-zinc-500 font-mono">PLANO FREE</span></div></div></div>
+<div class="space-y-8">
+<div class="flex items-center gap-3 cursor-pointer" onclick="showSection('home')">
+<div class="w-9 h-9 rounded-xl bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center shadow-[0_0_20px_rgba(34,211,238,.3)]"><i data-lucide="cpu" class="w-5 h-5 text-white"></i></div>
+<span class="font-bold text-xl tracking-tight text-white">TechNexus</span>
+</div>
+<nav class="space-y-1">
+<button onclick="showSection('home')" id="nav-home" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium bg-zinc-900 text-white border border-zinc-800"><i data-lucide="home" class="w-4 h-4 text-cyan-400"></i>Início & Notícias</button>
+<button onclick="showSection('search')" id="nav-search" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:bg-zinc-900/50 hover:text-zinc-200"><i data-lucide="compass" class="w-4 h-4"></i>Descobrir (AI)</button>
+<button onclick="showSection('profile')" id="nav-profile" class="nav-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-zinc-400 hover:bg-zinc-900/50 hover:text-zinc-200"><i data-lucide="user" class="w-4 h-4"></i>Meu Perfil</button>
+</nav>
+</div>
+<div class="space-y-4">
+<div class="border-t border-zinc-900 pt-4">
+<button onclick="showSection('login')" id="nav-login" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-zinc-500 hover:text-zinc-300"><i data-lucide="log-in" class="w-3.5 h-3.5"></i>Entrar / Registrar</button>
+<button onclick="showSection('privacy')" id="nav-privacy" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-xl text-xs text-zinc-500 hover:text-zinc-300"><i data-lucide="lock" class="w-3.5 h-3.5"></i>Privacidade</button>
+</div>
+<div class="p-3 bg-zinc-900/40 border border-zinc-900 rounded-xl flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center"><i data-lucide="user" class="w-4 h-4 text-zinc-400"></i></div><div><span class="block text-xs font-medium text-zinc-200">Convidado</span><span class="text-[9px] text-zinc-500 font-mono">PLANO FREE</span></div></div>
+</div>
 </aside>
+
 <main class="flex-1 overflow-y-auto h-screen flex flex-col relative w-full bg-zinc-950 scrollbar">
-<header class="sticky top-0 z-30 w-full border-b border-zinc-900 bg-zinc-950/90 backdrop-blur-md"><div class="px-4 md:px-8 h-[68px] flex items-center justify-between gap-4"><div class="hidden md:flex items-center gap-2 text-zinc-500 font-mono text-xs"><span class="text-zinc-400 cursor-pointer" onclick="showSection('home')">Nexus</span><span>/</span><span class="text-zinc-100 font-sans font-medium" id="page-indicator">Início & Notícias</span></div><div class="flex items-center gap-3 shrink-0 md:hidden"><div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center"><i data-lucide="cpu" class="w-4 h-4 text-white"></i></div><span class="font-bold text-base text-white">TechNexus</span></div>
-<form id="global-search-form" class="flex-1 max-w-md group relative" onsubmit="executeSearch(event)"><div class="relative flex items-center bg-zinc-900 border border-zinc-800 focus-within:border-cyan-500/40 rounded-xl px-3 py-1.5"><i data-lucide="search" class="w-4 h-4 text-zinc-500 mr-2"></i><input id="search-input" type="text" placeholder="Pesquise sobre IA, viagens, placas de vídeo..." class="w-full bg-transparent border-none text-zinc-100 text-xs sm:text-sm focus:outline-none"><button class="ml-2 px-2.5 py-1 bg-white hover:bg-zinc-200 text-zinc-950 rounded-lg text-[10px] sm:text-xs font-semibold">Pesquisar</button></div></form>
-<div class="flex items-center gap-3"><div class="hidden sm:flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-cyan-500"></span><span class="text-[10px] text-zinc-500 font-mono">IA Core v2.1</span></div><button onclick="toggleMobileMenu()" class="md:hidden p-2 border border-zinc-800 text-zinc-400 rounded-xl"><i data-lucide="menu" class="w-5 h-5"></i></button></div></div></header>
+<header class="sticky top-0 z-30 w-full border-b border-zinc-900 bg-zinc-950/90 backdrop-blur-md">
+<div class="px-4 md:px-8 h-[68px] flex items-center justify-between gap-4">
+<div class="hidden md:flex items-center gap-2 text-zinc-500 font-mono text-xs"><span class="text-zinc-400 cursor-pointer" onclick="showSection('home')">Nexus</span><span>/</span><span class="text-zinc-100 font-sans font-medium" id="page-indicator">Início & Notícias</span></div>
+<div class="flex items-center gap-3 shrink-0 md:hidden"><div class="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-purple-600 flex items-center justify-center"><i data-lucide="cpu" class="w-4 h-4 text-white"></i></div><span class="font-bold text-base text-white">TechNexus</span></div>
+<form id="global-search-form" class="flex-1 max-w-md group relative" onsubmit="executeSearch(event)">
+<div class="relative flex items-center bg-zinc-900 border border-zinc-800 focus-within:border-cyan-500/40 rounded-xl px-3 py-1.5">
+<i data-lucide="search" class="w-4 h-4 text-zinc-500 mr-2"></i>
+<input id="search-input" type="text" placeholder="Pesquise celulares, IA, GPUs, CPUs..." autocomplete="off" class="w-full bg-transparent border-none text-zinc-100 text-xs sm:text-sm focus:outline-none">
+<button class="ml-2 px-2.5 py-1 bg-white hover:bg-zinc-200 text-zinc-950 rounded-lg text-[10px] sm:text-xs font-semibold">Pesquisar</button>
+</div>
+</form>
+<div class="flex items-center gap-3"><div class="hidden sm:flex items-center gap-2"><span class="h-2 w-2 rounded-full bg-cyan-500"></span><span class="text-[10px] text-zinc-500 font-mono">Tech Core v3.0</span></div><button onclick="toggleMobileMenu()" class="md:hidden p-2 border border-zinc-800 text-zinc-400 rounded-xl"><i data-lucide="menu" class="w-5 h-5"></i></button></div>
+</div>
+</header>
+
 <div id="mobile-drawer" class="fixed inset-0 z-50 hidden"><div onclick="toggleMobileMenu()" class="fixed inset-0 bg-zinc-950/80 backdrop-blur-md"></div><div class="fixed inset-y-0 left-0 w-72 bg-zinc-950 border-r border-zinc-800 p-6 flex flex-col"><div class="flex justify-between items-center mb-8"><b class="text-white text-lg">TechNexus</b><button onclick="toggleMobileMenu()"><i data-lucide="x"></i></button></div><nav class="space-y-2"><button onclick="showSection('home');toggleMobileMenu()" class="w-full text-left p-3 rounded-xl bg-zinc-900">Início & Notícias</button><button onclick="showSection('search');toggleMobileMenu()" class="w-full text-left p-3 rounded-xl">Descobrir</button><button onclick="showSection('profile');toggleMobileMenu()" class="w-full text-left p-3 rounded-xl">Meu Perfil</button></nav></div></div>
+
 <div class="flex-1 px-4 md:px-8 py-8 w-full max-w-5xl mx-auto">
-<section id="sect-home" class="space-y-8"><div><h2 class="text-3xl font-extrabold tracking-tight text-white">Central de Tecnologia & Notícias</h2><p class="text-zinc-500 text-sm mt-1">Explore análises de tecnologia, IA, hardware e inovação.</p></div><div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+<section id="sect-home" class="space-y-8">
+<div><h2 class="text-3xl font-extrabold tracking-tight text-white">Central de Tecnologia & Notícias</h2><p class="text-zinc-500 text-sm mt-1">Explore análises de tecnologia, IA, hardware e inovação.</p></div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <div class="bg-zinc-900/40 hover:bg-zinc-900/70 border border-zinc-900 rounded-2xl p-6 transition-all hover:-translate-y-1 cursor-pointer" onclick="openPreset('IA')"><div class="flex justify-between mb-4"><span class="px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-400 text-[10px] font-mono font-semibold">INTELIGÊNCIA ARTIFICIAL</span><span class="text-xs text-zinc-500 font-mono">2026</span></div><h3 class="text-lg font-bold text-zinc-100 mb-2">Relatório de IA: O ecossistema generativo e novas fronteiras</h3><p class="text-xs text-zinc-400 mb-4">Análises sobre modelos generativos, aplicações, limitações e tendências de inteligência artificial.</p><div class="text-xs font-semibold text-cyan-400">Ler relatório <i data-lucide="arrow-right" class="inline w-3.5 h-3.5"></i></div></div>
 <div class="bg-zinc-900/40 hover:bg-zinc-900/70 border border-zinc-900 rounded-2xl p-6 transition-all hover:-translate-y-1 cursor-pointer" onclick="openPreset('viagem')"><div class="flex justify-between mb-4"><span class="px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-400 text-[10px] font-mono font-semibold">TURISMO GLOBAL</span><span class="text-xs text-zinc-500 font-mono">2026</span></div><h3 class="text-lg font-bold text-zinc-100 mb-2">Guia: destinos de viagem e planejamento</h3><p class="text-xs text-zinc-400 mb-4">Informações de referência para comparar destinos, épocas e custos de viagem.</p><div class="text-xs font-semibold text-purple-400">Explorar destinos <i data-lucide="arrow-right" class="inline w-3.5 h-3.5"></i></div></div>
 <div class="bg-zinc-900/40 hover:bg-zinc-900/70 border border-zinc-900 rounded-2xl p-6 transition-all hover:-translate-y-1 cursor-pointer" onclick="openPreset('GPU')"><div class="flex justify-between mb-4"><span class="px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-400 text-[10px] font-mono font-semibold">PROCESSAMENTO GRÁFICO</span><span class="text-xs text-zinc-500 font-mono">HARDWARE</span></div><h3 class="text-lg font-bold text-zinc-100 mb-2">Guia de GPUs: NVIDIA vs AMD</h3><p class="text-xs text-zinc-400 mb-4">Compare VRAM, desempenho, ray tracing e aplicações de GPUs para jogos e computação.</p><div class="text-xs font-semibold text-amber-400">Ver especificações <i data-lucide="arrow-right" class="inline w-3.5 h-3.5"></i></div></div>
 <div class="bg-zinc-900/40 hover:bg-zinc-900/70 border border-zinc-900 rounded-2xl p-6 transition-all hover:-translate-y-1 cursor-pointer" onclick="openPreset('CPU')"><div class="flex justify-between mb-4"><span class="px-2.5 py-1 rounded-md bg-rose-500/10 text-rose-400 text-[10px] font-mono font-semibold">PROCESSADORES</span><span class="text-xs text-zinc-500 font-mono">SILÍCIO</span></div><h3 class="text-lg font-bold text-zinc-100 mb-2">Relatório avançado: Intel vs AMD</h3><p class="text-xs text-zinc-400 mb-4">Arquiteturas, desempenho em games, produtividade e eficiência.</p><div class="text-xs font-semibold text-rose-400">Examinar processadores <i data-lucide="arrow-right" class="inline w-3.5 h-3.5"></i></div></div>
-</div></section>
-<section id="sect-search" class="space-y-6 hidden"><button onclick="showSection('home')" class="flex items-center gap-2 text-xs text-zinc-400 bg-zinc-900/50 border border-zinc-800 px-4 py-2 rounded-xl"><i data-lucide="arrow-left" class="w-4 h-4"></i>Voltar</button><div id="search-loading" class="hidden py-16 flex-col items-center justify-center gap-3 text-zinc-500"><i data-lucide="loader-2" class="w-10 h-10 animate-spin text-cyan-400"></i><span class="font-mono text-xs">PESQUISANDO...</span></div><article id="search-result" class="bg-zinc-900/30 border border-zinc-800 p-6 sm:p-10 rounded-3xl hidden"><span class="text-xs text-cyan-400 font-semibold uppercase">Resultados</span><h1 id="result-title" class="text-xl sm:text-2xl font-bold text-white mt-1"></h1><div id="result-content" class="markdown-body mt-6"></div></article></section>
+</div>
+</section>
+
+<section id="sect-search" class="space-y-6 hidden">
+<button onclick="showSection('home')" class="flex items-center gap-2 text-xs text-zinc-400 bg-zinc-900/50 border border-zinc-800 px-4 py-2 rounded-xl"><i data-lucide="arrow-left" class="w-4 h-4"></i>Voltar</button>
+<div id="search-loading" class="hidden py-16 flex-col items-center justify-center gap-3 text-zinc-500"><i data-lucide="loader-2" class="w-10 h-10 animate-spin text-cyan-400"></i><span class="font-mono text-xs">ANALISANDO PESQUISA...</span></div>
+<article id="search-result" class="bg-zinc-900/30 border border-zinc-800 p-6 sm:p-10 rounded-3xl hidden">
+<span class="text-xs text-cyan-400 font-semibold uppercase">Resultados TechNexus</span>
+<h1 id="result-title" class="text-xl sm:text-2xl font-bold text-white mt-1"></h1>
+<div id="result-content" class="markdown-body mt-6"></div>
+</article>
+</section>
+
 <section id="sect-profile" class="hidden"><div class="max-w-md mx-auto bg-zinc-900/60 border border-zinc-800 p-8 rounded-3xl text-center"><i data-lucide="user-check" class="w-10 h-10 text-cyan-400 mx-auto mb-3"></i><h3 class="text-2xl font-bold text-white">Visitante TechNexus</h3><p class="text-xs text-zinc-500 mt-1">Nível 1 de Informações</p></div></section>
 <section id="sect-login" class="hidden"><div class="max-w-md mx-auto bg-zinc-900 border border-zinc-800 p-8 rounded-3xl"><h4 class="text-xl font-bold text-white mb-4">Acesse o TechNexus</h4><input class="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-2.5 text-xs mb-3" placeholder="Seu nome"><input type="email" class="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-2.5 text-xs mb-3" placeholder="E-mail"><button class="w-full py-2.5 bg-cyan-500 text-zinc-950 rounded-lg text-xs font-bold">Registrar Minha Conta</button></div></section>
 <section id="sect-privacy" class="hidden"><h3 class="text-2xl font-bold text-white">Política de Privacidade</h3><p class="text-sm text-zinc-400 mt-4">Esta página apresenta informações gerais sobre privacidade e uso do site.</p></section>
-</div><footer class="border-t border-zinc-900 py-6 mt-auto"><div class="max-w-5xl mx-auto px-4 md:px-8 flex justify-between text-[11px] text-zinc-500"><span>© 2026 TechNexus Global. Todos os direitos reservados.</span><span>v2.1-STABLE</span></div></footer>
+
+</div>
+<footer class="border-t border-zinc-900 py-6 mt-auto"><div class="max-w-5xl mx-auto px-4 md:px-8 flex justify-between text-[11px] text-zinc-500"><span>© 2026 TechNexus Global. Todos os direitos reservados.</span><span>v3.0-SEARCH</span></div></footer>
 </main>
+
 <script>
-const localReports={
- ia:{title:'Relatório de IA: ecossistema generativo',html:'<h2>Inteligência Artificial</h2><p>Modelos generativos estão transformando programação, criação de conteúdo, pesquisa e produtividade. Este relatório apresenta conceitos, aplicações e pontos que devem ser verificados antes de tomar decisões técnicas.</p><h3>Principais áreas</h3><ul><li>Assistentes e agentes de IA</li><li>Geração de texto, imagem, áudio e vídeo</li><li>Programação assistida por IA</li><li>Modelos multimodais</li></ul>'},
- viagem:{title:'Guia de destinos de viagem',html:'<h2>Destinos e planejamento</h2><p>Compare destinos considerando orçamento, época do ano, transporte, atrações e segurança. Os custos variam muito e devem ser confirmados antes da viagem.</p><h3>Exemplos</h3><ul><li>Tóquio</li><li>Paris</li><li>Roma</li><li>Bali</li><li>Nova York</li></ul>'},
- gpu:{title:'Guia de GPUs: NVIDIA vs AMD',html:'<h2>Placas de vídeo</h2><p>Ao escolher uma GPU, compare desempenho, VRAM, consumo, ray tracing, upscaling e compatibilidade com o software que você realmente pretende usar.</p><h3>Critérios</h3><ul><li>VRAM</li><li>Desempenho por resolução</li><li>Ray tracing</li><li>Recursos de IA</li></ul>'},
- cpu:{title:'Relatório de processadores: Intel vs AMD',html:'<h2>CPUs</h2><p>O melhor processador depende do uso. Games, edição de vídeo, compilação e tarefas de IA podem favorecer modelos diferentes.</p><h3>Critérios</h3><ul><li>Núcleos e threads</li><li>Desempenho por núcleo</li><li>Consumo e temperatura</li><li>Plataforma e possibilidade de upgrade</li></ul>'}
-};
-function showSection(id){document.querySelectorAll('[id^="sect-"]').forEach(x=>x.classList.add('hidden'));document.getElementById('sect-'+id)?.classList.remove('hidden');const names={home:'Início & Notícias',search:'Descobrir (AI)',profile:'Meu Perfil',login:'Entrar / Registrar',privacy:'Privacidade'};document.getElementById('page-indicator').textContent=names[id]||'Busca';document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('bg-zinc-900','text-white','border','border-zinc-800'));document.getElementById('nav-'+id)?.classList.add('bg-zinc-900','text-white','border','border-zinc-800');}
+/*
+ TechNexus Search Core v3.0
+ - Remove o redirecionamento automático para Wikipédia.
+ - Usa um índice local de tecnologia com busca por relevância.
+ - Aceita perguntas em português e normaliza acentos.
+ - Para perguntas fora do índice, oferece busca externa sem fingir que encontrou uma resposta.
+ - Não contém chaves secretas de API.
+*/
+
+const techIndex = [
+{
+ id:'phone-s26-ultra', type:'Celular', title:'Samsung Galaxy S26 Ultra', year:'2026',
+ tags:['samsung','galaxy','s26','s26 ultra','celular','smartphone','camera','android','flagship'],
+ text:'Flagship Android focado em desempenho, câmeras, tela e recursos de IA. É uma das referências premium de 2026.',
+ answer:'Uma escolha muito forte para quem quer Android premium, câmera versátil, desempenho alto e recursos de IA. O principal ponto é o preço elevado.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'phone-iphone17pm', type:'Celular', title:'iPhone 17 Pro Max', year:'2026',
+ tags:['apple','iphone','17','17 pro','17 pro max','celular','smartphone','ios','camera','video'],
+ text:'Flagship da Apple com foco em desempenho, vídeo, câmeras, integração com o ecossistema Apple e suporte prolongado.',
+ answer:'É uma das melhores opções para quem valoriza vídeo, desempenho e integração com outros produtos Apple. Para quem prefere Android, existem alternativas mais flexíveis.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'phone-pixel11proxl', type:'Celular', title:'Google Pixel 11 Pro XL', year:'2026',
+ tags:['google','pixel','11','11 pro','11 pro xl','celular','smartphone','android','camera','ia'],
+ text:'Flagship Android com forte foco em fotografia computacional, recursos de IA e software do Google.',
+ answer:'É especialmente interessante para fotografia, IA integrada e experiência Android. A disponibilidade e o preço variam conforme o mercado.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'phone-pixel10pro', type:'Celular', title:'Google Pixel 10 Pro', year:'2026',
+ tags:['google','pixel','10','10 pro','celular','smartphone','android','camera','ia'],
+ text:'Flagship Pixel ainda relevante em 2026, principalmente para fotografia computacional, IA e software.',
+ answer:'Uma boa opção se câmera e recursos inteligentes forem prioridade e se estiver disponível a um preço competitivo.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'phone-oneplus15', type:'Celular', title:'OnePlus 15', year:'2026',
+ tags:['oneplus','15','celular','smartphone','android','desempenho','bateria'],
+ text:'Flagship Android conhecido por desempenho e bateria, podendo ser uma alternativa aos modelos mais caros de Samsung e Apple.',
+ answer:'Interessante para quem prioriza desempenho e autonomia. A disponibilidade depende do país.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'phone-pixel10a', type:'Celular', title:'Google Pixel 10a', year:'2026',
+ tags:['pixel','10a','google','celular','smartphone','barato','medio','custo beneficio','android'],
+ text:'Opção mais acessível da linha Pixel, voltada para quem quer recursos de software e câmera sem pagar preço de flagship.',
+ answer:'Uma alternativa interessante para custo-benefício dentro do ecossistema Pixel.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'gpu-rx9070', type:'GPU', title:'AMD Radeon RX 9070', year:'2026',
+ tags:['amd','radeon','rx 9070','gpu','placa','placa de video','grafica','gaming','1440p','4k'],
+ text:'GPU de alto desempenho com forte foco em jogos e relação desempenho/preço.',
+ answer:'É uma das opções AMD que merece atenção quando o objetivo é equilibrar desempenho e preço.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'gpu-rx9070xt', type:'GPU', title:'AMD Radeon RX 9070 XT', year:'2026',
+ tags:['amd','radeon','rx 9070 xt','gpu','placa','placa de video','gaming','1440p','4k'],
+ text:'GPU de alto desempenho indicada para jogos em 1440p e 4K, especialmente quando encontrada a preço competitivo.',
+ answer:'Uma forte escolha para gaming de alto desempenho e custo-benefício em relação a GPUs Nvidia equivalentes, dependendo do preço.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'gpu-rtx5090', type:'GPU', title:'NVIDIA GeForce RTX 5090', year:'2026',
+ tags:['nvidia','rtx','5090','gpu','placa','placa de video','gaming','ia','ai','ray tracing','4k','8k'],
+ text:'GPU topo de linha da geração RTX 50, voltada para 4K, criação de conteúdo, IA e cargas profissionais.',
+ answer:'É uma escolha extrema para quem quer máximo desempenho, mas preço, consumo e disponibilidade tornam-na inadequada para a maioria dos usuários.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'gpu-rtx5070ti', type:'GPU', title:'NVIDIA GeForce RTX 5070 Ti', year:'2026',
+ tags:['nvidia','rtx','5070 ti','gpu','placa','placa de video','gaming','4k','dlss'],
+ text:'GPU de alto desempenho que busca equilíbrio entre gaming 4K e recursos do ecossistema Nvidia.',
+ answer:'Uma opção Nvidia equilibrada para alto desempenho, desde que o preço de mercado esteja próximo do valor que você pretende pagar.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'gpu-rtx5060', type:'GPU', title:'NVIDIA GeForce RTX 5060', year:'2026',
+ tags:['nvidia','rtx','5060','gpu','placa','placa de video','gaming','1080p','1440p','dlss'],
+ text:'GPU voltada principalmente para gaming 1080p e 1440p, com acesso ao ecossistema de recursos Nvidia.',
+ answer:'Uma opção de faixa intermediária para quem joga em 1080p e quer recursos como DLSS.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'gpu-rx9060xt', type:'GPU', title:'AMD Radeon RX 9060 XT 16GB', year:'2026',
+ tags:['amd','radeon','rx 9060 xt','16gb','gpu','placa','placa de video','valor','1440p'],
+ text:'GPU intermediária com 16 GB de memória, interessante para quem procura capacidade de VRAM e bom desempenho em 1080p/1440p.',
+ answer:'É uma opção a considerar quando a prioridade é valor e uma quantidade generosa de VRAM para a faixa.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'gpu-arc-b580', type:'GPU', title:'Intel Arc B580', year:'2026',
+ tags:['intel','arc','b580','gpu','placa','placa de video','budget','1080p','1440p'],
+ text:'GPU de entrada/intermediária conhecida por oferecer 12 GB de VRAM e boa relação custo-benefício em determinados mercados.',
+ answer:'Pode ser uma alternativa forte para orçamento limitado, especialmente em 1080p/1440p.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'cpu-270kplus', type:'CPU', title:'Intel Core Ultra 7 270K Plus', year:'2026',
+ tags:['intel','core ultra','270k plus','cpu','processador','processadores','gaming','produtividade','arrow lake'],
+ text:'Processador desktop Arrow Lake Refresh com 24 núcleos (8 P + 16 E), forte em produtividade e também competitivo em jogos.',
+ answer:'Uma escolha forte para quem combina jogos com edição, renderização e multitarefa pesada.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'cpu-250kplus', type:'CPU', title:'Intel Core Ultra 5 250K Plus', year:'2026',
+ tags:['intel','core ultra','250k plus','cpu','processador','processadores','gaming','medio'],
+ text:'Processador intermediário com foco em desempenho de jogos e bom valor quando encontrado perto da faixa de preço recomendada.',
+ answer:'Uma alternativa interessante de médio porte para gaming e uso geral.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'cpu-7800x3d', type:'CPU', title:'AMD Ryzen 7 7800X3D', year:'2026',
+ tags:['amd','ryzen','7800x3d','cpu','processador','processadores','gaming','x3d','3d v cache'],
+ text:'CPU X3D conhecida por forte desempenho em jogos e eficiência energética.',
+ answer:'Continua sendo uma opção muito forte para quem encontra preço competitivo e prioriza gaming.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'cpu-7700x3d', type:'CPU', title:'AMD Ryzen 7 7700X3D', year:'2026',
+ tags:['amd','ryzen','7700x3d','cpu','processador','processadores','gaming','x3d','eficiencia'],
+ text:'CPU X3D voltada para gaming, com foco em eficiência e desempenho por watt.',
+ answer:'Boa escolha para gaming quando o preço e a disponibilidade forem melhores que os de outros X3D.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'cpu-9800x3d', type:'CPU', title:'AMD Ryzen 7 9800X3D', year:'2026',
+ tags:['amd','ryzen','9800x3d','cpu','processador','processadores','gaming','x3d'],
+ text:'Processador Ryzen X3D de alto desempenho direcionado principalmente a gaming.',
+ answer:'Uma das referências da AMD para PCs de jogos de alto desempenho.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'ai-generative', type:'IA', title:'Inteligência Artificial generativa', year:'2026',
+ tags:['ia','ai','inteligencia artificial','generativa','gpt','claude','gemini','agente','agentes','multimodal'],
+ text:'Tecnologia capaz de gerar ou transformar texto, código, imagens, áudio e vídeo. Em 2026, agentes e sistemas multimodais são áreas importantes.',
+ answer:'Se você quer estudar IA, comece por modelos generativos, multimodalidade, agentes, avaliação, segurança e integração via APIs.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'ai-agents', type:'IA', title:'Agentes de IA', year:'2026',
+ tags:['ia','ai','agente','agentes','agentic','automacao','automação'],
+ text:'Sistemas de IA que podem planejar etapas, usar ferramentas e executar tarefas com menor intervenção humana.',
+ answer:'Agentes são úteis para automação, pesquisa, programação e fluxos de trabalho, mas precisam de limites, validação e observabilidade.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'ai-multimodal', type:'IA', title:'IA multimodal', year:'2026',
+ tags:['ia','ai','multimodal','texto','imagem','audio','video','visao','voz'],
+ text:'Modelos que trabalham com mais de um tipo de informação, como texto, imagem, áudio e vídeo.',
+ answer:'A multimodalidade permite interfaces mais naturais e tarefas que combinam visão, linguagem, voz e conteúdo audiovisual.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'smartphone-guide', type:'Guia', title:'Como escolher um celular em 2026', year:'2026',
+ tags:['celular','smartphone','comprar','melhor','melhores','telefone','telefones'],
+ text:'Para escolher um smartphone, compare desempenho, câmera, bateria, tela, atualizações, armazenamento, conectividade e preço real no seu mercado.',
+ answer:'Não existe um único melhor celular para todo mundo. Para flagship, compare Galaxy S26 Ultra, iPhone 17 Pro Max e Pixel 11 Pro XL/Pixel 10 Pro conforme sistema, câmera, vídeo, IA e ecossistema.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'gpu-guide', type:'Guia', title:'Como escolher uma GPU em 2026', year:'2026',
+ tags:['gpu','placa','placa de video','placa grafica','nvidia','amd','intel','gaming'],
+ text:'Compare desempenho na resolução desejada, VRAM, ray tracing, upscaling, consumo, preço e suporte de software.',
+ answer:'Para gaming, não escolha apenas pelo nome da GPU. O preço de rua e o desempenho no jogo/resolução que você usa são decisivos.',
+ source:'TechNexus editorial index'
+},
+{
+ id:'cpu-guide', type:'Guia', title:'Como escolher um processador em 2026', year:'2026',
+ tags:['cpu','processador','processadores','intel','amd','gaming','produtividade'],
+ text:'A escolha depende do objetivo: gaming, produtividade, edição, renderização, IA ou servidor.',
+ answer:'Para gaming, X3D da AMD é uma referência; para cargas de produtividade, Intel e AMD devem ser comparados pelo software específico, consumo e plataforma.',
+ source:'TechNexus editorial index'
+}
+];
+
+const stopWords = new Set(['de','da','do','das','dos','e','a','o','as','os','um','uma','para','por','com','em','no','na','nos','nas','que','qual','quais','como','sobre','2026','2025','me','melhor','melhores']);
+
+function normalizeText(value){
+  return String(value||'')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9\s.-]/g,' ')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+
+function tokens(value){
+  return normalizeText(value).split(' ').filter(t=>t && t.length>1 && !stopWords.has(t));
+}
+
+function scoreItem(item, query){
+  const qn=normalizeText(query);
+  const qt=tokens(query);
+  const title=normalizeText(item.title);
+  const tagText=item.tags.map(normalizeText).join(' ');
+  const text=normalizeText(item.text+' '+item.answer);
+  let score=0;
+
+  if(title===qn) score+=100;
+  if(title.includes(qn)) score+=45;
+  if(tagText.includes(qn)) score+=35;
+
+  for(const token of qt){
+    if(title.split(' ').includes(token)) score+=18;
+    else if(title.includes(token)) score+=9;
+    if(item.tags.some(t=>normalizeText(t)===token)) score+=15;
+    else if(tagText.includes(token)) score+=7;
+    if(text.includes(token)) score+=3;
+  }
+
+  const phraseBoosts=[
+    [['melhores','celulares','smartphone','telefone'],'Celular'],
+    [['gpu','placa','video','grafica','rtx','radeon'],'GPU'],
+    [['cpu','processador','ryzen','intel'],'CPU'],
+    [['ia','inteligencia','gpt','gemini','claude','agente'],'IA']
+  ];
+
+  for(const [words,type] of phraseBoosts){
+    if(words.some(w=>qt.includes(w)) && item.type===type) score+=18;
+  }
+
+  return score;
+}
+
+function searchIndex(query){
+  return techIndex
+    .map(item=>({...item,_score:scoreItem(item,query)}))
+    .filter(item=>item._score>0)
+    .sort((a,b)=>b._score-a._score);
+}
+
+function escapeHtml(s){
+  return String(s).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
+}
+
+function externalSearchUrl(q){
+  return 'https://www.google.com/search?q='+encodeURIComponent(q);
+}
+
+function buildPhoneAnswer(q){
+  const results=searchIndex(q).filter(x=>x.type==='Celular');
+  const list=(results.length?results:techIndex.filter(x=>x.type==='Celular')).slice(0,6);
+  return `
+  <div class="search-summary">
+    <strong>Resposta direta</strong>
+    <p class="mt-2">Não existe um único “melhor” celular para todo mundo. Para 2026, estes são alguns dos modelos que o índice TechNexus considera mais relevantes para comparação, com perfis diferentes.</p>
+  </div>
+  ${list.map((x,i)=>resultCard(x,i+1)).join('')}
+  <p class="text-xs text-zinc-500 mt-5">A classificação é editorial e deve ser atualizada quando novos modelos, testes e preços forem incorporados.</p>`;
+}
+
+function resultCard(item, rank){
+  return `<div class="result-card">
+    <h3>${rank?rank+'. ':''}${escapeHtml(item.title)}</h3>
+    <p>${escapeHtml(item.text)} ${escapeHtml(item.answer)}</p>
+    <div class="meta"><span class="tag">${escapeHtml(item.type)}</span><span>${escapeHtml(item.year)}</span><span>${escapeHtml(item.source)}</span></div>
+  </div>`;
+}
+
+function buildGenericResults(q, results){
+  const top=results.slice(0,8);
+  return `
+  <div class="search-summary">
+    <strong>Pesquisa interpretada</strong>
+    <p class="mt-2">O TechNexus encontrou ${top.length} resultado(s) relacionados a <strong>${escapeHtml(q)}</strong> no seu índice tecnológico.</p>
+  </div>
+  ${top.map((x,i)=>resultCard(x,i+1)).join('')}
+  <div class="mt-6 pt-5 border-t border-zinc-800">
+    <p class="text-xs text-zinc-500 mb-2">Quer ampliar para toda a web?</p>
+    <a class="external-search" href="${externalSearchUrl(q)}" target="_blank" rel="noopener noreferrer">
+      Pesquisar "${escapeHtml(q)}" na web <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+    </a>
+  </div>`;
+}
+
+function buildNoResults(q){
+  return `
+  <div class="search-summary">
+    <strong>Não encontrei esse assunto no índice TechNexus.</strong>
+    <p class="mt-2">Em vez de inventar uma resposta ou mandar você para um artigo irrelevante, o site informa que ainda não possui conteúdo indexado para essa consulta.</p>
+  </div>
+  <div class="result-card">
+    <h3>Expandir pesquisa</h3>
+    <p>Use a busca externa para consultar a web inteira enquanto o mecanismo de busca próprio do TechNexus ainda está sendo desenvolvido.</p>
+    <a class="external-search" href="${externalSearchUrl(q)}" target="_blank" rel="noopener noreferrer">
+      Pesquisar na web <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+    </a>
+  </div>`;
+}
+
+function buildGuideAnswer(q, type){
+  const item=techIndex.find(x=>x.type===type && x.title.toLowerCase().includes('como escolher'));
+  return item ? `
+  <div class="search-summary"><strong>Resposta do TechNexus</strong><p class="mt-2">${escapeHtml(item.answer)}</p></div>
+  ${resultCard(item,'')}
+  ${searchIndex(q).filter(x=>x.type===type && x.id!==item.id).slice(0,5).map((x,i)=>resultCard(x,i+1)).join('')}
+  ` : buildGenericResults(q,searchIndex(q));
+}
+
+function buildAIAnswer(q){
+  const results=searchIndex(q).filter(x=>x.type==='IA');
+  return `
+  <div class="search-summary"><strong>Resposta direta</strong><p class="mt-2">IA generativa, agentes e multimodalidade são áreas centrais do ecossistema atual. O resultado abaixo organiza os conceitos mais relevantes para a sua pesquisa.</p></div>
+  ${results.slice(0,6).map((x,i)=>resultCard(x,i+1)).join('')}
+  <div class="mt-6 pt-5 border-t border-zinc-800"><a class="external-search" href="${externalSearchUrl(q)}" target="_blank" rel="noopener noreferrer">Ampliar pesquisa na web <i data-lucide="external-link" class="w-3.5 h-3.5"></i></a></div>`;
+}
+
+function buildGPUAnswer(q){
+  const results=searchIndex(q).filter(x=>x.type==='GPU');
+  return `
+  <div class="search-summary"><strong>Resposta direta</strong><p class="mt-2">Para GPUs, desempenho por resolução, VRAM, preço, ray tracing, upscaling e software importam mais do que simplesmente escolher a marca.</p></div>
+  ${results.slice(0,7).map((x,i)=>resultCard(x,i+1)).join('')}`;
+}
+
+function buildCPUAnswer(q){
+  const results=searchIndex(q).filter(x=>x.type==='CPU');
+  return `
+  <div class="search-summary"><strong>Resposta direta</strong><p class="mt-2">A melhor CPU depende do uso. Gaming, produtividade e eficiência podem levar a escolhas diferentes.</p></div>
+  ${results.slice(0,7).map((x,i)=>resultCard(x,i+1)).join('')}`;
+}
+
+
+function escapeHtmlSafe(value){
+  return String(value??'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+}
+
+function stripHtml(value){
+  const div=document.createElement('div');
+  div.innerHTML=String(value||'');
+  return div.textContent||div.innerText||'';
+}
+
+function wikipediaSearchUrl(q){
+  return 'https://pt.wikipedia.org/w/index.php?search='+encodeURIComponent(q);
+}
+
+async function fetchWikipediaResults(q){
+  const api='https://pt.wikipedia.org/w/api.php?action=query&list=search&srsearch='+
+    encodeURIComponent(q)+'&format=json&origin=*&utf8=1&srlimit=6';
+  const response=await fetch(api,{headers:{'Accept':'application/json'}});
+  if(!response.ok) throw new Error('Falha na pesquisa');
+  const data=await response.json();
+  const hits=data?.query?.search||[];
+  return hits.map(item=>({
+    title:item.title,
+    snippet:stripHtml(item.snippet||''),
+    pageid:item.pageid,
+    url:'https://pt.wikipedia.org/?curid='+item.pageid
+  }));
+}
+
+function renderLiveResults(results,q){
+  if(!results.length){
+    return `<div class="answer-box">
+      <strong>Nenhum resultado web encontrado para "${escapeHtmlSafe(q)}".</strong>
+      <p class="mt-2 text-xs text-zinc-400">Tente usar termos mais específicos.</p>
+    </div>`;
+  }
+  return `<div class="mt-5">
+    <div class="flex items-center justify-between gap-3">
+      <div>
+        <strong class="text-sm text-white">Resultados encontrados na Web</strong>
+        <p class="text-xs text-zinc-500 mt-1">Fontes públicas consultadas em tempo real.</p>
+      </div>
+      <span class="search-status">LIVE</span>
+    </div>
+    ${results.map((r,i)=>`
+      <article class="live-result-card">
+        <h3>${i+1}. ${escapeHtmlSafe(r.title)}</h3>
+        <p>${escapeHtmlSafe(r.snippet)}</p>
+        <div class="source-row">
+          <span class="source-badge">WIKIPEDIA</span>
+          <a class="source-link" href="${r.url}" target="_blank" rel="noopener noreferrer">Abrir fonte →</a>
+        </div>
+      </article>`).join('')}
+  </div>`;
+}
+
+function buildLiveAnswer(q, results){
+  const local=searchIndex(q).slice(0,4);
+  return `
+    <div class="answer-box">
+      <strong>Pesquisa: ${escapeHtmlSafe(q)}</strong>
+      <p class="mt-2 text-xs text-zinc-400">
+        O TechNexus combinou o conteúdo próprio com resultados encontrados online.
+        Os resultados abaixo são fontes de pesquisa; não são apresentados como uma resposta gerada pelo TechNexus.
+      </p>
+    </div>
+    ${local.length ? `
+      <div class="mt-6">
+        <strong class="text-sm text-white">Conteúdo relacionado do TechNexus</strong>
+        ${local.map((x,i)=>resultCard(x,i+1)).join('')}
+      </div>` : ''}
+    ${renderLiveResults(results,q)}
+    <div class="mt-6 pt-5 border-t border-zinc-800">
+      <a class="external-search" href="${externalSearchUrl(q)}" target="_blank" rel="noopener noreferrer">
+        Continuar pesquisa na web <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+      </a>
+    </div>`;
+}
+
+async function executeSearch(e){
+  if(e)e.preventDefault();
+  const input=document.getElementById('search-input');
+  const q=input.value.trim();
+  if(!q)return;
+
+  showSection('search');
+
+  const title=document.getElementById('result-title');
+  const load=document.getElementById('search-loading');
+  const result=document.getElementById('search-result');
+  const box=document.getElementById('result-content');
+
+  result.classList.add('hidden');
+  load.classList.remove('hidden');
+  load.classList.add('flex');
+
+  await new Promise(resolve=>setTimeout(resolve,180));
+
+  try{
+    const key=normalizeText(q);
+    const isPhone=/(celular|celulares|smartphone|smartphones|telefone|telefones|iphone|galaxy|pixel|oneplus)/.test(key);
+    const isGPU=/(gpu|placa de video|placa grafica|placa de video|rtx|radeon|arc b)/.test(key);
+    const isCPU=/(cpu|processador|processadores|ryzen|core ultra|intel|amd)/.test(key);
+    const isAI=/(ia|inteligencia artificial|gpt|gemini|claude|agente de ia|agentes de ia|multimodal)/.test(key);
+
+    title.textContent='Pesquisa: "'+q+'"';
+
+    if(isPhone && /(melhor|melhores|qual|quais|top|ranking)/.test(key)){
+      title.textContent='Melhores celulares de 2026';
+      const live=await fetchWikipediaResults(q).catch(()=>[]);
+      box.innerHTML=buildPhoneAnswer(q)+renderLiveResults(live,q);
+    }else if(isGPU){
+      title.textContent='Pesquisa sobre GPUs: "'+q+'"';
+      const live=await fetchWikipediaResults(q).catch(()=>[]);
+      box.innerHTML=buildGPUAnswer(q)+renderLiveResults(live,q);
+    }else if(isCPU){
+      title.textContent='Pesquisa sobre processadores: "'+q+'"';
+      const live=await fetchWikipediaResults(q).catch(()=>[]);
+      box.innerHTML=buildCPUAnswer(q)+renderLiveResults(live,q);
+    }else if(isAI){
+      title.textContent='Pesquisa sobre Inteligência Artificial';
+      const live=await fetchWikipediaResults(q).catch(()=>[]);
+      box.innerHTML=buildAIAnswer(q)+renderLiveResults(live,q);
+    }else if(/como escolher.*celular|qual celular comprar/.test(key)){
+      title.textContent='Como escolher um celular em 2026';
+      box.innerHTML=buildPhoneAnswer(q);
+    }else{
+      const localResults=searchIndex(q);
+      let liveResults=[];
+      try{
+        liveResults=await fetchWikipediaResults(q);
+      }catch(webErr){
+        liveResults=[];
+      }
+      box.innerHTML=buildLiveAnswer(q,liveResults);
+    }
+  }catch(err){
+    title.textContent='Erro na pesquisa';
+    box.innerHTML='<div class="search-summary"><strong>Não foi possível processar a pesquisa.</strong><p class="mt-2">Tente novamente.</p></div>';
+  }finally{
+    load.classList.remove('flex');
+    load.classList.add('hidden');
+    result.classList.remove('hidden');
+    lucide.createIcons();
+    input.value='';
+  }
+}
+
+function showSection(id){
+  document.querySelectorAll('[id^="sect-"]').forEach(x=>x.classList.add('hidden'));
+  document.getElementById('sect-'+id)?.classList.remove('hidden');
+  const names={home:'Início & Notícias',search:'Descobrir (AI)',profile:'Meu Perfil',login:'Entrar / Registrar',privacy:'Privacidade'};
+  const indicator=document.getElementById('page-indicator');
+  if(indicator)indicator.textContent=names[id]||'Busca';
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('bg-zinc-900','text-white','border','border-zinc-800'));
+  document.getElementById('nav-'+id)?.classList.add('bg-zinc-900','text-white','border','border-zinc-800');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
 function toggleMobileMenu(){document.getElementById('mobile-drawer').classList.toggle('hidden')}
+
 function openPreset(q){document.getElementById('search-input').value=q;executeSearch()}
-function escapeHtml(s){return s.replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
-async function executeSearch(e){if(e)e.preventDefault();const input=document.getElementById('search-input');const q=input.value.trim();if(!q)return;showSection('search');document.getElementById('result-title').textContent='Pesquisa: "'+q+'"';const load=document.getElementById('search-loading'),result=document.getElementById('search-result'),box=document.getElementById('result-content');result.classList.add('hidden');load.classList.remove('hidden');load.classList.add('flex');const key=q.toLowerCase();let local=key.includes('ia')||key.includes('intelig')||key.includes('gpt')||key.includes('claude')?'ia':key.includes('viag')||key.includes('turism')||key.includes('destin')||key.includes('hotel')?'viagem':key.includes('gpu')||key.includes('placa')||key.includes('rtx')||key.includes('nvidia')||key.includes('amd radeon')?'gpu':key.includes('cpu')||key.includes('process')||key.includes('ryzen')||key.includes('intel')||key.includes('amd')?'cpu':null;
-try{if(local){box.innerHTML=localReports[local].html;document.getElementById('result-title').textContent=localReports[local].title;}else{const url='https://pt.wikipedia.org/w/api.php?action=query&list=search&srsearch='+encodeURIComponent(q)+'&utf8=1&format=json&origin=*';const r=await fetch(url);if(!r.ok)throw new Error('HTTP '+r.status);const data=await r.json();const items=data?.query?.search||[];if(!items.length)throw new Error('Nenhum resultado');box.innerHTML='<h2>Resultados encontrados</h2>'+items.slice(0,8).map(x=>'<a class="result-link" href="https://pt.wikipedia.org/wiki/'+encodeURIComponent(x.title.replaceAll(' ','_'))+'" target="_blank" rel="noopener"><h3>'+escapeHtml(x.title)+'</h3><p>'+x.snippet.replace(/<[^>]*>/g,'')+'...</p><span>Wikipedia →</span></a>').join('');}}catch(err){box.innerHTML='<h2>Não foi possível obter resultados agora.</h2><p>O navegador não conseguiu consultar a fonte externa. Tente novamente com a internet ligada.</p><p><a class="text-cyan-400" target="_blank" rel="noopener" href="https://www.google.com/search?q='+encodeURIComponent(q)+'">Pesquisar "'+escapeHtml(q)+'" no Google →</a></p>';}finally{load.classList.remove('flex');load.classList.add('hidden');result.classList.remove('hidden');lucide.createIcons();input.value='';}}
+
 lucide.createIcons();
-</script></body></html>
+</script>
+</body>
+  </html>
