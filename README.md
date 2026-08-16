@@ -1,2 +1,3 @@
 # TechNexus
-TechNexus — Plataforma de tecnologia, inteligência artificial, hardware e inovação.
+
+Site estático do TechNexus. O arquivo `index.html` é a entrada principal.
