@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
 <head>
- <script>
-  atOptions = {
-    'key' : '1a563948b47356bec36725ab88539310',
-    'format' : 'iframe',
-    'height' : 50,
-    'width' : 320,
-    'params' : {}
-  };
-</script>
-<script src="https://www.highperformanceformat.com/1a563948b47356bec36725ab88539310/invoke.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>TechNexus - Inteligência e Pesquisa de Inovação</title>
@@ -59,6 +49,18 @@ header{position:sticky;top:0}
 .search-status{font-size:.72rem;color:#71717a;font-family:'JetBrains Mono',monospace}
 .answer-box{background:linear-gradient(135deg,rgba(34,211,238,.07),rgba(168,85,247,.06));border:1px solid rgba(63,63,70,.8);border-radius:1rem;padding:1rem}
 .answer-box strong{color:#fff}
+
+/* ===== TECHNEXUS ADS ===== */
+.ad-slot{width:100%;display:flex;justify-content:center;align-items:center;text-align:center;overflow:hidden;margin:24px auto;min-height:0;}
+.ad-slot-728{min-height:90px;}
+.ad-slot-320{display:none;min-height:50px;}
+.ad-slot-300{min-height:250px;}
+@media (max-width:767px){
+  .ad-slot-728{display:none;}
+  .ad-slot-320{display:flex;}
+  .ad-slot-300{min-height:250px;}
+}
+
 </style>
 
 </head>
@@ -108,11 +110,47 @@ header{position:sticky;top:0}
 
 <section id="sect-home" class="space-y-8">
 <div><h2 class="text-3xl font-extrabold tracking-tight text-white">Central de Tecnologia & Notícias</h2><p class="text-zinc-500 text-sm mt-1">Explore análises de tecnologia, IA, hardware e inovação.</p></div>
+<div class="ad-slot ad-slot-728" aria-label="Publicidade">
+<script>
+atOptions = {
+  'key' : '6ab0f6cddfe81606c2369e1766a99c9d',
+  'format' : 'iframe',
+  'height' : 90,
+  'width' : 728,
+  'params' : {}
+};
+</script>
+<script src="https://www.highperformanceformat.com/6ab0f6cddfe81606c2369e1766a99c9d/invoke.js"></script>
+</div>
+<div class="ad-slot ad-slot-320" aria-label="Publicidade">
+<script>
+atOptions = {
+  'key' : '1a563948b47356bec36725ab88539310',
+  'format' : 'iframe',
+  'height' : 50,
+  'width' : 320,
+  'params' : {}
+};
+</script>
+<script src="https://www.highperformanceformat.com/1a563948b47356bec36725ab88539310/invoke.js"></script>
+</div>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <div class="bg-zinc-900/40 hover:bg-zinc-900/70 border border-zinc-900 rounded-2xl p-6 transition-all hover:-translate-y-1 cursor-pointer" onclick="openPreset('IA')"><div class="flex justify-between mb-4"><span class="px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-400 text-[10px] font-mono font-semibold">INTELIGÊNCIA ARTIFICIAL</span><span class="text-xs text-zinc-500 font-mono">2026</span></div><h3 class="text-lg font-bold text-zinc-100 mb-2">Relatório de IA: O ecossistema generativo e novas fronteiras</h3><p class="text-xs text-zinc-400 mb-4">Análises sobre modelos generativos, aplicações, limitações e tendências de inteligência artificial.</p><div class="text-xs font-semibold text-cyan-400">Ler relatório <i data-lucide="arrow-right" class="inline w-3.5 h-3.5"></i></div></div>
 <div class="bg-zinc-900/40 hover:bg-zinc-900/70 border border-zinc-900 rounded-2xl p-6 transition-all hover:-translate-y-1 cursor-pointer" onclick="openPreset('viagem')"><div class="flex justify-between mb-4"><span class="px-2.5 py-1 rounded-md bg-purple-500/10 text-purple-400 text-[10px] font-mono font-semibold">TURISMO GLOBAL</span><span class="text-xs text-zinc-500 font-mono">2026</span></div><h3 class="text-lg font-bold text-zinc-100 mb-2">Guia: destinos de viagem e planejamento</h3><p class="text-xs text-zinc-400 mb-4">Informações de referência para comparar destinos, épocas e custos de viagem.</p><div class="text-xs font-semibold text-purple-400">Explorar destinos <i data-lucide="arrow-right" class="inline w-3.5 h-3.5"></i></div></div>
 <div class="bg-zinc-900/40 hover:bg-zinc-900/70 border border-zinc-900 rounded-2xl p-6 transition-all hover:-translate-y-1 cursor-pointer" onclick="openPreset('GPU')"><div class="flex justify-between mb-4"><span class="px-2.5 py-1 rounded-md bg-amber-500/10 text-amber-400 text-[10px] font-mono font-semibold">PROCESSAMENTO GRÁFICO</span><span class="text-xs text-zinc-500 font-mono">HARDWARE</span></div><h3 class="text-lg font-bold text-zinc-100 mb-2">Guia de GPUs: NVIDIA vs AMD</h3><p class="text-xs text-zinc-400 mb-4">Compare VRAM, desempenho, ray tracing e aplicações de GPUs para jogos e computação.</p><div class="text-xs font-semibold text-amber-400">Ver especificações <i data-lucide="arrow-right" class="inline w-3.5 h-3.5"></i></div></div>
 <div class="bg-zinc-900/40 hover:bg-zinc-900/70 border border-zinc-900 rounded-2xl p-6 transition-all hover:-translate-y-1 cursor-pointer" onclick="openPreset('CPU')"><div class="flex justify-between mb-4"><span class="px-2.5 py-1 rounded-md bg-rose-500/10 text-rose-400 text-[10px] font-mono font-semibold">PROCESSADORES</span><span class="text-xs text-zinc-500 font-mono">SILÍCIO</span></div><h3 class="text-lg font-bold text-zinc-100 mb-2">Relatório avançado: Intel vs AMD</h3><p class="text-xs text-zinc-400 mb-4">Arquiteturas, desempenho em games, produtividade e eficiência.</p><div class="text-xs font-semibold text-rose-400">Examinar processadores <i data-lucide="arrow-right" class="inline w-3.5 h-3.5"></i></div></div>
+</div>
+<div class="ad-slot ad-slot-300" aria-label="Publicidade">
+<script>
+atOptions = {
+  'key' : '0aba5030e15f4089508327f669872346',
+  'format' : 'iframe',
+  'height' : 250,
+  'width' : 300,
+  'params' : {}
+};
+</script>
+<script src="https://www.highperformanceformat.com/0aba5030e15f4089508327f669872346/invoke.js"></script>
 </div>
 </section>
 
@@ -628,5 +666,6 @@ function openPreset(q){document.getElementById('search-input').value=q;executeSe
 
 lucide.createIcons();
 </script>
+<script src="https://pl30928355.effectivecpmnetwork.com/69/06/8a/69068a6dc1d0e70c033ce6191ece1fb0.js"></script>
 </body>
-  </html>
+</html>
